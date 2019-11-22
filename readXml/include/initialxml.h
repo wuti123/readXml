@@ -26,11 +26,12 @@ public:
     TiXmlDocument doc;      // 申明一个文档类型变量，用来存储读取的xml文档
     TiXmlElement *root;     // 指向xml文档的根元素
     TiXmlElement *elem;     // elem指向根的第一个孩子元素
-    std::vector<classnameAndCoord> name_coord;
+    std::vector<classnameAndCoord> name_coord;   // 用于存储从xml提取的目标类型及其坐标值
 
 
     InitialXml(std::string xml_name);
     void loadXml();
+    ~InitialXml();
 
 
 };

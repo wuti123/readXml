@@ -19,7 +19,7 @@ void InitialXml::loadXml()
     if (NULL == root)
     {
         std::cout << "Failed to load file: No root element." << std::endl;
-        doc.Clear();
+//        doc.Clear();
         return;
     }
 
@@ -28,7 +28,7 @@ void InitialXml::loadXml()
     string tmp1 = "object";
     string tmp2 = "bndbox";
 
-
+    // 元素的value()值是节点的名称，元素的FirstChild()->Value()值是节点存储的标签值
     for (elem = root->FirstChildElement(); NULL != elem; elem = elem->NextSiblingElement())
     {
 //        cout << elem->Value() << endl;
@@ -37,7 +37,7 @@ void InitialXml::loadXml()
 
         TiXmlElement *elem1 = elem->FirstChildElement();
         cout << elem1->FirstChild()->Value() << endl;
-        classname_coord.classname = elem1->FirstChild()->Value();     // name
+        classname_coord.classname = elem1->FirstChild()->Value();     // 保存类别的名称
 
         for (; NULL != elem1; elem1 = elem1->NextSiblingElement())
         {
@@ -50,9 +50,9 @@ void InitialXml::loadXml()
 
             for (int i = 0; NULL != elem2; elem2 = elem2->NextSiblingElement(), i++)
             {
-                stringstream ss;                                     // string to digital
+                stringstream ss;                                     // 从xml中读取的都是字符串，用于将字符串转成数字
 
-                switch (i)                                           // coordinate
+                switch (i)                                           // 坐标
                 {
                 case 0:
                     ss << elem2->FirstChild()->Value();
@@ -78,7 +78,7 @@ void InitialXml::loadXml()
             }
         }
 
-        classname_coord.area = (classname_coord.Xmax - classname_coord.Xmin) * (classname_coord.Ymax - classname_coord.Ymin);  // area
+        classname_coord.area = (classname_coord.Xmax - classname_coord.Xmin) * (classname_coord.Ymax - classname_coord.Ymin);  // 面积
 
         name_coord.push_back(classname_coord);
 //        std::cout << node->Value() << std::endl;
@@ -87,4 +87,10 @@ void InitialXml::loadXml()
     for (int i = 0; i < name_coord.size(); i++)
         cout << "area: " << name_coord[i].area << endl;
 
+}
+
+
+InitialXml::~InitialXml()
+{
+    doc.Clear();
 }
